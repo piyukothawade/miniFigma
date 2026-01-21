@@ -101,10 +101,15 @@ function create(type) {
   };
 
   state.elements.push(el);
-  snapshot();
-  renderElement(el);
-  select(el.id);
-  autoSave();
+snapshot();
+
+renderElement(el);
+requestAnimationFrame(() => {
+  select(el.id); // 🔥 ensures DOM exists before selection
+});
+
+autoSave();
+
 }
 
 /* =======================
@@ -126,10 +131,13 @@ function renderElement(el) {
   }
 
   div.onmousedown = startDrag;
-  div.onclick = e => {
-    e.stopPropagation();
+
+div.onclick = e => {
+  e.stopPropagation();
+  if (state.selectedId !== el.id) {
     select(el.id);
-  };
+  }
+};
 
   canvas.appendChild(div);
   updateStyle(div, el);
@@ -191,6 +199,14 @@ canvas.onclick = () => {
 let dragData = null;
 
 function startDrag(e) {
+  const id = e.currentTarget.dataset.id;
+  if (!id) return;
+
+  // 🔥 FORCE selection before dragging
+  if (state.selectedId !== id) {
+    select(id);
+  }
+
   if (
     e.target.classList.contains("resize-handle") ||
     e.target.classList.contains("rotate-handle")
@@ -211,6 +227,7 @@ function startDrag(e) {
   document.onmousemove = drag;
   document.onmouseup = () => dragData = null;
 }
+
 
 function drag(e) {
   if (!dragData) return;
@@ -456,7 +473,12 @@ function renderLayers() {
     const div = document.createElement("div");
     div.className = "layer-item" + (el.id === state.selectedId ? " selected" : "");
     div.textContent = el.type + " " + el.id;
-    div.onclick = () => select(el.id);
+   div.onclick = () => {
+  if (state.selectedId !== el.id) {
+    select(el.id);
+  }
+};
+
     layersList.appendChild(div);
   });
 }

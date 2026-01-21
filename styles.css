@@ -254,7 +254,7 @@ body {
 .rotate-handle {
   width: 28px;
   height: 28px;
-  background: var(--panel-hover);
+  background: rgb(101, 100, 100);
   border-radius: 50%;
   position: absolute;
   top: -36px;
@@ -272,7 +272,7 @@ body {
 .rotate-handle i {
   width: 16px;
   height: 16px;
-  color: var(--brand-outline);
+  color: white;
   pointer-events: none;
 }
 

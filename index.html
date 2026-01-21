@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mini Figma Editor</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- Left Panel -->
+  <div id="leftPanel">
+    <h2 class="panel-title">Tools</h2>
+
+    <button id="addRect" class="icon-btn">
+      <i data-lucide="square"></i>
+      Add Rectangle
+    </button>
+
+    <button id="addText" class="icon-btn">
+      <i data-lucide="type"></i>
+      Add Text
+    </button>
+
+    <h2 class="panel-title">Layers</h2>
+
+    
+
+    <div id="layersList"></div>
+
+
+    <!-- ARROW UP DOWN BUTTONS -->
+     <h2>Hierarchy</h2>
+    <div class="layer-actions">
+       
+      <button id="layerUp" class="icon-only">
+        <i data-lucide="arrow-up"></i>
+      </button>
+      <button id="layerDown" class="icon-only">
+        <i data-lucide="arrow-down"></i>
+      </button>
+    </div>
+
+   
+  </div>
+
+  <!-- Canvas -->
+  <div id="canvasWrapper">
+    <div id="canvas"></div>
+  </div>
+
+  
+ 
+
+  <!-- Right Panel -->
+  <div id="rightPanel">
+    <h2 class="panel-title">Properties</h2>
+
+    <div class="property">
+      <label>Width</label>
+      <input type="number" id="propWidth">
+    </div>
+
+    <div class="property">
+      <label>Height</label>
+      <input type="number" id="propHeight">
+    </div>
+
+    <div class="property">
+      <label>Rotate</label>
+      <input type="number" id="propRotate" min="0" max="360">
+    </div>
+
+    <div class="property">
+      <label>Background</label>
+      <input type="color" id="colorInput">
+    </div>
+
+    <div class="property">
+      <label>Text</label>
+      <textarea id="propText"></textarea>
+    </div>
+
+    <div class="history">
+      <button id="undoBtn" class="icon-btn" disabled>
+        <i data-lucide="undo"></i> Undo
+      </button>
+      <button id="redoBtn" class="icon-btn" disabled>
+        <i data-lucide="redo"></i> Redo
+      </button>
+    </div>
+  </div>
+  
+
+</div>
+<div id="canvasFooter">
+    <button id="exportJson" class="icon-btn">
+      <i data-lucide="download"></i> Export JSON
+    </button>
+
+    <button id="importJson" class="icon-btn">
+      <i data-lucide="upload"></i> Import JSON
+    </button>
+
+    <button id="exportHtml" class="icon-btn primary">
+      <i data-lucide="code"></i> Export HTML
+    </button>
+
+    <input type="file" id="importFile" hidden />
+  </div>
+
+<script>
+  lucide.createIcons();
+</script>
+<script src="script.js"></script>
+</body>
+</html>

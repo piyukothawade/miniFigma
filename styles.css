@@ -1,0 +1,351 @@
+/* =====================
+   COLOR VARIABLES
+===================== */
+:root {
+  --bg-body-start: #2b2f36;
+  --bg-body-end: #15171b;
+
+  --panel-bg: rgba(30, 34, 41, 0.85);
+  --panel-solid: #1f232b;
+  --panel-hover: #2c323c;
+  --panel-hover-strong: #3a4150;
+
+  --canvas-wrapper-bg: #1b1e24;
+  --canvas-bg: #ffffff;
+
+  --grid-line: #e5e7eb;
+
+  --text-primary: #f0f0f0;
+  --text-secondary: #9ca3af;
+  --text-muted: #cbd5f5;
+  --text-dark: #111827;
+
+  --border-default: #374151;
+
+  --brand-primary: #3b82f6;
+  --brand-primary-dark: #2563eb;
+  --brand-outline: #38bdf8;
+
+  --shadow-panel: 0 10px 40px rgba(0,0,0,0.45);
+  --shadow-button: 5px 5px 5px black;
+  --rotate-shadow: #020617;
+}
+
+/* =====================
+   Base
+===================== */
+* {
+  box-sizing: border-box;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, var(--bg-body-start), var(--bg-body-end));
+  color: var(--text-primary);
+}
+
+/* =====================
+   Layout
+===================== */
+#app {
+  display: flex;
+  height: 100vh;
+  gap: 10px;
+  padding: 10px;
+}
+
+/* =====================
+   Panels (Shared)
+===================== */
+#leftPanel,
+#rightPanel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  box-shadow: var(--shadow-panel);
+}
+
+/* =====================
+   Left Panel
+===================== */
+#leftPanel {
+  width: 200px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+#leftPanel h3 {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#leftPanel button {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background: var(--panel-hover);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+#leftPanel button:hover {
+  background: var(--panel-hover-strong);
+  transform: translateY(-1px);
+}
+
+/* =====================
+   Layers
+===================== */
+.layers {
+  margin-top: 16px;
+  overflow-y: auto;
+}
+
+.layer-item {
+  padding: 8px 10px;
+  background: var(--panel-solid);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.15s;
+}
+
+.layer-item:hover {
+  background: var(--panel-hover);
+}
+
+.layer-item.selected {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary),
+    var(--brand-primary-dark)
+  );
+}
+
+/* =====================
+   Canvas
+===================== */
+#canvasWrapper {
+  flex: 1;
+  background: var(--canvas-wrapper-bg);
+  overflow: auto;
+  position: relative;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#canvas {
+  position: relative;
+  width: 4000px;
+  height: 4000px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      var(--grid-line),
+      var(--grid-line) 1px,
+      transparent 1px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--grid-line),
+      var(--grid-line) 1px,
+      transparent 1px,
+      transparent 20px
+    );
+  background-color: var(--canvas-bg);
+  border-radius: 8px;
+  margin: auto;
+}
+
+/* =====================
+   Right Panel
+===================== */
+#rightPanel {
+  width: 220px;
+  padding: 16px;
+}
+
+.property {
+  margin-bottom: 14px;
+}
+
+.property label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.property input,
+.property textarea {
+  width: 100%;
+  padding: 8px;
+  background: var(--panel-solid);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  border-radius: 8px;
+}
+
+.property input:focus,
+.property textarea:focus {
+  outline: none;
+  border-color: var(--brand-primary);
+}
+
+/* =====================
+   Elements
+===================== */
+.element {
+  position: absolute;
+  cursor: move;
+  border-radius: 6px;
+}
+
+.rectangle {
+  background: linear-gradient(
+    135deg,
+    var(--brand-primary),
+    var(--brand-primary-dark)
+  );
+}
+
+.text {
+  background: transparent;
+  padding: 6px;
+  min-width: 80px;
+  min-height: 30px;
+  color: var(--text-dark);
+}
+
+.selected {
+  outline: 2px solid var(--brand-outline);
+}
+
+/* =====================
+   Resize Handles
+===================== */
+.resize-handle {
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border: 2px solid var(--brand-outline);
+  position: absolute;
+  border-radius: 3px;
+}
+
+.resize-handle.nw { top: -5px; left: -5px; cursor: nwse-resize; }
+.resize-handle.ne { top: -5px; right: -5px; cursor: nesw-resize; }
+.resize-handle.sw { bottom: -5px; left: -5px; cursor: nesw-resize; }
+.resize-handle.se { bottom: -5px; right: -5px; cursor: nwse-resize; }
+
+/* =====================
+   Rotation Handle
+===================== */
+.rotate-handle {
+  width: 28px;
+  height: 28px;
+  background: var(--panel-hover);
+  border-radius: 50%;
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: grab;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* box-shadow: var(--shadow-button); */
+}
+
+.rotate-handle i {
+  width: 16px;
+  height: 16px;
+  color: var(--brand-outline);
+  pointer-events: none;
+}
+
+.rotate-handle:active {
+  cursor: grabbing;
+  transform: translateX(-50%) scale(0.95);
+}
+
+
+/* =====================
+   Toolbar / History
+===================== */
+.toolbar-group button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.layer-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 7px;
+}
+
+#leftPanel button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#undoBtn,
+#redoBtn {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: var(--panel-hover);
+  border: none;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-button);
+}
+
+#undoBtn:active,
+#redoBtn:active {
+  box-shadow: 0px 0px 0px;
+  scale: 0.9;
+}
+
+/* =====================
+   Canvas Footer
+===================== */
+#canvasArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#canvasFooter {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+}
+
+#canvasFooter button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: var(--panel-hover);
+  border: none;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-button);
+}
